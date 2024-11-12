@@ -3,11 +3,11 @@ const performCalculation = {
     '+': (firstOperand, secondOperand) => firstOperand + secondOperand,
     '-': (firstOperand, secondOperand) => firstOperand - secondOperand,
     '*': (firstOperand, secondOperand) => firstOperand * secondOperand,
-    '/': (firstOperand, secondOperand) => firstOperand / secondOperand
+    '/': (firstOperand, secondOperand) => firstOperand / secondOperand,
 }
 /*-------------------------------- Variables --------------------------------*/
 let displayValue = '0'
-let firstOperand = null
+let firstOperand = null   
 let secondOperand = false
 let opertor = null
 /*------------------------ Cached Element References ------------------------*/
@@ -27,6 +27,7 @@ function handleButtonClock(event) {
     const {target} = event
 }
 
+/////////////////////////////////////////////////////////////////
 
 if (target. classList.contains('number')) {
     if (displayValue === '0'|| secondOperand) {
@@ -52,9 +53,31 @@ if (target.classList.contains('opertor')){
 secondOperand = true
 updateDisplay()
 }
+//////////////////////////////////////////////////////////////////////
+
+
+//i didnt know hhow to do the equals i am full of nothing to think
+
+
+
+
+
+
+
+
+
+
+
+
+
 /////////////////////////////////////////////////////////////////////
+//7.clear all operations and start from 0
 
-
+if (target.classList.contains('clear')) {
+    resetCalculator()
+    updateDisplay()
+}
+//////////////////////////////////////////////////////////////////////
 
 function resetCalculator () {
     displayValue = '0'
@@ -63,3 +86,6 @@ function resetCalculator () {
     secondOperand = false
 }
 //////////////////////////////////////////////////////////////////////
+
+// at the end as usual
+updateDisplay()
