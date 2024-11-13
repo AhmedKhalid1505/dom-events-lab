@@ -1,91 +1,65 @@
 /*-------------------------------- Constants --------------------------------*/
-const performCalculation = {
-    '+': (firstOperand, secondOperand) => firstOperand + secondOperand,
-    '-': (firstOperand, secondOperand) => firstOperand - secondOperand,
-    '*': (firstOperand, secondOperand) => firstOperand * secondOperand,
-    '/': (firstOperand, secondOperand) => firstOperand / secondOperand,
-}
 /*-------------------------------- Variables --------------------------------*/
-let displayValue = '0'
-let firstOperand = null   
-let secondOperand = false
-let opertor = null
+let firstNumber = '';
+let secondNumber = '';
+let operator = null;
+let result = 0;
 /*------------------------ Cached Element References ------------------------*/
-const calculator = document.querySelector('#calculator')   
-const display = document.querySelector('#display')
-
+const buttons = document.querySelectorAll('.button')
+const displayEl = document.querySelector('.display')
 /*----------------------------- Event Listeners -----------------------------*/
-calculator.addEventListener('click', handleButtonClock)     //Add event listeners to all buttons at once.
+buttons.forEach((button) => {
+    button.addEventListener('click', (event) => {
+        // if it is a number
+        if(event.target.classList.contains("number")) {
+            if(operator === null) {
+                firstNumber += event.target.innerText
+                displayEl.innerText = firstNumber
+            } else {
+                secondNumber += event.target.innerText
+                displayEl.innerText = firstNumber + operator + secondNumber 
+            }
+        }
+        // if it is an operator
+        else if (event.target.classList.contains("operator")){
+            let selectedOperator = event.target.innerText
+            if (selectedOperator === 'C') {
+              // CLEAR DISPLAY
+              displayEl.innerText = ''
+              firstNumber = ''
+              secondNumber = ''
+              operator = null
+              result = 0
+            } else {
+                if (firstNumber !== '') {
+                    operator = event.target.innerText   
+                    displayEl.innerText = firstNumber + operator
+                }
+            }
+            
+        } 
+        // if it's equals
+        
+        else if (event.target.classList.contains("equals")) {
+            calculate()
+        }
+    })
+})
 /*-------------------------------- Functions --------------------------------*/
-
-/////////////////////////////////////////////////////////////////
-function updateDisplay() {
-    display.textContent = displayValue;
-}
-
-function handleButtonClock(event) {
-    const {target} = event
-}
-
-/////////////////////////////////////////////////////////////////
-
-if (target. classList.contains('number')) {
-    if (displayValue === '0'|| secondOperand) {
-        displayValue = target.innerText
-        secondOperand = false
-    } else {
-        displayValue += target.innerText
+function calculate() {
+    if(firstNumber !== '' && secondNumber !== '' && operator !== null) {
+        let num1 = parseFloat(firstNumber)
+        let num2 = parseFloat(secondNumber)
+        // do the calculation
+        if (operator === '+') {
+            result = num1 + num2
+        } else if(operator === '-') {
+            result = num1 - num2
+        } else if(operator === '*') {
+            result = num1 * num2
+        } else if(operator === '/') {
+            result = num1 / num2
+        }
+        displayEl.innerText = result
     }
-    updateDisplay()
 }
-/////////////////////////////////////////////////////////////////
-
-
-if (target.classList.contains('opertor')){
-    if (firstOperand === null) {
-        firstOperand = parseFloat(displayValue)
-    } else if (opertor) {
-        const result = performCalculation[opertor](firstOperand, parseFloat(displayValue))
-        displayValue = `${result}`
-        firstOperand = result
-    }
-    opertor = target.innerText
-secondOperand = true
-updateDisplay()
-}
-//////////////////////////////////////////////////////////////////////
-
-
-//i didnt know hhow to do the equals i am full of nothing to think
-
-
-
-
-
-
-
-
-
-
-
-
-
-/////////////////////////////////////////////////////////////////////
-//7.clear all operations and start from 0
-
-if (target.classList.contains('clear')) {
-    resetCalculator()
-    updateDisplay()
-}
-//////////////////////////////////////////////////////////////////////
-
-function resetCalculator () {
-    displayValue = '0'
-    firstOperand = null
-    opertor = null
-    secondOperand = false
-}
-//////////////////////////////////////////////////////////////////////
-
-// at the end as usual
-updateDisplay()
